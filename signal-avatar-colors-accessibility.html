@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signal avatar colors accessibility</title>
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1,
+    h2 {
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 40px;
+      font-weight: normal;
+      color: #666;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .avatar-group {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    .avatar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    .avatar-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .avatar-name {
+      font-weight: 600;
+      font-size: 18px;
+      margin-right: 15px;
+    }
+
+    .avatar-colors {
+      display: flex;
+      font-family: monospace;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .avatar-colors .bg {
+      margin-right: 15px;
+    }
+
+    .contrast-info {
+      font-size: 14px;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .wcag-aa-lg {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .wcag-aa {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .sizes-container {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 25px;
+    }
+
+    .size-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .size-label {
+      font-size: 12px;
+      margin-top: 8px;
+      color: #666;
+    }
+
+    .avatar {
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 500;
+    }
+    .avatar-A100 { background-color: #e3e3fe; color: #3838f5; }
+    .avatar-A110 { background-color: #dde7fc; color: #1251d3; }
+    .avatar-A120 { background-color: #d8e8f0; color: #086da0; }
+    .avatar-A130 { background-color: #cde4cd; color: #067906; }
+    .avatar-A130-improved { background-color: #cfe8cf; color: #005a00; }
+    .avatar-A140 { background-color: #eae0fd; color: #661aff; }
+    .avatar-A150 { background-color: #f5e3fe; color: #9f00f0; }
+    .avatar-A160 { background-color: #f6d8ec; color: #b8057c; }
+    .avatar-A170 { background-color: #f5d7d7; color: #be0404; }
+    .avatar-A180 { background-color: #fef5d0; color: #836b01; }
+    .avatar-A190 { background-color: #eae6d5; color: #7d6f40; }
+    .avatar-A190-improved { background-color: #eae6d5; color: #665930; }
+    .avatar-A200 { background-color: #d2d2dc; color: #4f4f6d; }
+    .avatar-A210 { background-color: #d7d7d9; color: #5c5c5c; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Signal avatar Colors accessibility</h1>
+    <h2>Testing Signal avatar colors accessibility in multiple sizes</h2>
+
+    <div id="avatars-container"></div>
+  </div>
+
+  <script>
+    const avatarColors = [
+      { name: 'A100', bg: '#e3e3fe', fg: '#3838f5', contrast: '5.47', wcag: 'AA (Large & Small Text), AAA (Large Text)', letter: 'A' },
+      { name: 'A110', bg: '#dde7fc', fg: '#1251d3', contrast: '5.38', wcag: 'AA (Large & Small Text), AAA (Large Text)', letter: 'B' },
+      { name: 'A120', bg: '#d8e8f0', fg: '#086da0', contrast: '4.51', wcag: 'AA (Large & Small Text), AAA (Large Text)', letter: 'C' },
+      { name: 'A130', bg: '#cde4cd', fg: '#067906', contrast: '4.16', wcag: 'AA (Large Text)', letter: 'D' },
+      { name: 'A130-improved', bg: '#cfe8cf', fg: '#005a00', contrast: '6.54', wcag: 'AA (Large & Small Text), AAA (Large Text)', letter: 'D*' },
+      { name: 'A140', bg: '#eae0fd', fg: '#661aff', contrast: '5.25', wcag: 'AA (Large & Small Text), AAA (Large Text)', letter: 'E' },
+      { name: 'A150', bg: '#f5e3fe', fg: '#9f00f0', contrast: '4.64', wcag: 'AA (Large & Small Text), AAA (Large Text)', letter: 'F' },
+      { name: 'A160', bg: '#f6d8ec', fg: '#b8057c', contrast: '4.76', wcag: 'AA (Large & Small Text), AAA (Large Text)', letter: 'G' },
+      { name: 'A170', bg: '#f5d7d7', fg: '#be0404', contrast: '4.86', wcag: 'AA (Large & Small Text), AAA (Large Text)', letter: 'H' },
+      { name: 'A180', bg: '#fef5d0', fg: '#836b01', contrast: '4.72', wcag: 'AA (Large & Small Text), AAA (Large Text)', letter: 'I' },
+      { name: 'A190', bg: '#eae6d5', fg: '#7d6f40', contrast: '3.98', wcag: 'AA (Large Text)', letter: 'J' },
+      { name: 'A190-improved', bg: '#eae6d5', fg: '#665930', contrast: '5.53', wcag: 'AA (Large & Small Text), AAA (Large Text)', letter: 'J*' },
+      { name: 'A200', bg: '#d2d2dc', fg: '#4f4f6d', contrast: '5.24', wcag: 'AA (Large & Small Text), AAA (Large Text)', letter: 'K' },
+      { name: 'A210', bg: '#d7d7d9', fg: '#5c5c5c', contrast: '4.65', wcag: 'AA (Large & Small Text), AAA (Large Text)', letter: 'L' }
+    ]
+
+    const avatarSizes = [20, 24, 28, 30, 32, 36, 40, 48, 52]
+
+    const container = document.getElementById('avatars-container')
+
+    avatarColors.forEach(color => {
+      const avatarGroup = document.createElement('div')
+      avatarGroup.className = 'avatar-group'
+
+      const header = document.createElement('div')
+      header.className = 'avatar-header'
+
+      const avatarInfo = document.createElement('div')
+      avatarInfo.className = 'avatar-info'
+
+      const avatarName = document.createElement('div')
+      avatarName.className = 'avatar-name'
+      avatarName.textContent = color.name
+
+      const avatarColorInfo = document.createElement('div')
+      avatarColorInfo.className = 'avatar-colors'
+
+      const bgColor = document.createElement('div')
+      bgColor.className = 'bg'
+      bgColor.textContent = `BG: ${color.bg}`
+
+      const fgColor = document.createElement('div')
+      fgColor.className = 'fg'
+      fgColor.textContent = `FG: ${color.fg}`
+
+      avatarColorInfo.appendChild(bgColor)
+      avatarColorInfo.appendChild(fgColor)
+
+      avatarInfo.appendChild(avatarName)
+      avatarInfo.appendChild(avatarColorInfo)
+
+      const contrastInfo = document.createElement('div')
+      contrastInfo.className = color.wcag.includes('Small Text') ? 'contrast-info wcag-aa' : 'contrast-info wcag-aa-lg'
+      contrastInfo.textContent = `Contrast: ${color.contrast} - ${color.wcag}`
+
+      header.appendChild(avatarInfo)
+      header.appendChild(contrastInfo)
+
+      const sizesContainer = document.createElement('div')
+      sizesContainer.className = 'sizes-container'
+
+      avatarSizes.forEach(size => {
+        const fontSize = Math.ceil(size * 0.45)
+
+        const sizeGroup = document.createElement('div')
+        sizeGroup.className = 'size-group'
+
+        const avatar = document.createElement('div')
+        avatar.className = `avatar avatar-${color.name}`
+        avatar.style.width = `${size}px`
+        avatar.style.height = `${size}px`
+        avatar.style.fontSize = `${fontSize}px`
+        avatar.textContent = color.letter
+
+        const sizeLabel = document.createElement('div')
+        sizeLabel.className = 'size-label'
+        sizeLabel.textContent = `${size}px (${fontSize}px)`
+
+        sizeGroup.appendChild(avatar)
+        sizeGroup.appendChild(sizeLabel)
+        sizesContainer.appendChild(sizeGroup)
+      })
+
+      avatarGroup.appendChild(header)
+      avatarGroup.appendChild(sizesContainer)
+      container.appendChild(avatarGroup)
+    });
+  </script>
+</body>
+
+</html>
